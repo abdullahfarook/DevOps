@@ -1,14 +1,15 @@
-version: '3.4'
+version: "3.4"
 services:
   svg2font.api:
     volumes:
-      - 'c:/${ATTACH_DISK}/Svg2Font.Api/wwwroot:/usr/app/wwwroot/'
+      - "c:/${ATTACH_DISK}/app/svg2font/wwwroot:/usr/app/wwwroot/"
     environment:
-      - 'ASPNETCORE_ENVIRONMENT=Sandbox'
-      - 'ConnectionString=Server=mssql,1433;Database=svg2fontdb;User Id=sa;Password=${DB_PASSWORD};MultipleActiveResultSets=true;'
-    build: 
+      - "ASPNETCORE_ENVIRONMENT=Sandbox"
+    build:
       context: ../../Svg2Font.Api/
       dockerfile: ./Dockerfile.original
-  # svg2font.generator:
-  #   volumes:
-  #     - '.././Svg2Font.Api/wwwroot:/usr/src/Svg2Font.Api/wwwroot/'
+  svg2font.generator:
+    volumes:
+      - "c:/${ATTACH_DISK}/app/svg2font/wwwroot/icon:/app/uploads/:ro"
+    build:
+      context: ../../Svg2Font.Generator/
