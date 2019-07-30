@@ -1,34 +1,41 @@
-version: "3.4"
+version: '3.4'
 services:
   svg2font.api:
-    image: brickclaycontainerregistry.azurecr.io/svg2font.api:latest
+    image: 'brickclaycontainerregistry.azurecr.io/svg2font.api:latest'
     container_name: svg2font_api
     ports:
-      - "5000:5000"
-    # depends_on:
-    #   - mssql
+      - '5000:5000'
     environment:
-      - "ASPNETCORE_ENVIRONMENT=Development"
-      - "ConnectionString=Server=${DB_HOST},${DB_PORT};Database=${DB_NAME};User Id=${DB_USERNAME};Password=${DB_PASSWORD};MultipleActiveResultSets=true;"
+      - ASPNETCORE_ENVIRONMENT=Development
+      - 'ConnectionString=Server=${DB_HOST},${DB_PORT};Database=${DB_NAME};User Id=${DB_USERNAME};Password=${DB_PASSWORD};MultipleActiveResultSets=true;'
+      - ASPNETCORE_ENVIRONMENT=Sandbox
     restart: always
     networks:
       - proxynet
-    # build: Svg2Font.Api
+    volumes:
+      - 'c:/${ATTACH_DISK}/app/svg2font/wwwroot:/usr/app/wwwroot/'
+    build:
+      context: ../../Svg2Font.Api/
+      dockerfile: ./Dockerfile.original
   svg2font.generator:
-    image: brickclaycontainerregistry.azurecr.io/svg2font.generator:latest
+    image: 'brickclaycontainerregistry.azurecr.io/svg2font.generator:latest'
     container_name: svg2font_generator
     restart: always
     ports:
-      - "3000:3000"
+      - '3000:3000'
     environment:
-      - "API_PREFIX=${API_PREFIX}"
-      - "DB_HOST=${DB_HOST}"
-      - "DB_PORT=${DB_PORT}"
-      - "DB_NAME=${DB_NAME}"
-      - "DB_USERNAME=${DB_USERNAME}"
-      - "DB_PASSWORD=${DB_PASSWORD}"
+      - 'API_PREFIX=${API_PREFIX}'
+      - 'DB_HOST=${DB_HOST}'
+      - 'DB_PORT=${DB_PORT}'
+      - 'DB_NAME=${DB_NAME}'
+      - 'DB_USERNAME=${DB_USERNAME}'
+      - 'DB_PASSWORD=${DB_PASSWORD}'
     networks:
       - proxynet
+    volumes:
+      - 'c:/${ATTACH_DISK}/app/svg2font/wwwroot/icon:/app/uploads/:ro'
+    build:
+      context: ../../Svg2Font.Generator/
 networks:
   proxynet:
     external:
