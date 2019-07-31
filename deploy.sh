@@ -154,7 +154,7 @@ echo "docker pull $dockerRepo"
 output=$(docker pull $dockerRepo | tee /dev/stderr)
 
 if [[ $output != *"up to date"* ]]; then # Not up to date
-    success=$(docker-compose -f docker-compose.yml -f docker-compose.$env up -d --force-recreate --build $serviceName)
+    success=$(docker-compose -f docker-compose.yml -f docker-compose.$env up -d --force-recreate $serviceName)
     if (( success != 0 )); then
       echo "Error in Running Service"
       exit 1

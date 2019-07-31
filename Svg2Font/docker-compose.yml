@@ -14,9 +14,6 @@ services:
       - proxynet
     volumes:
       - 'c:/${ATTACH_DISK}/app/svg2font/wwwroot:/usr/app/wwwroot/'
-    build:
-      context: ../../Svg2Font.Api/
-      dockerfile: ./Dockerfile.original
   svg2font.generator:
     image: 'brickclaycontainerregistry.azurecr.io/svg2font.generator:latest'
     container_name: svg2font_generator
@@ -34,8 +31,6 @@ services:
       - proxynet
     volumes:
       - 'c:/${ATTACH_DISK}/app/svg2font/wwwroot/icon:/app/uploads/:ro'
-    build:
-      context: ../../Svg2Font.Generator/
 networks:
   proxynet:
     external:
