@@ -7,7 +7,7 @@ services:
       - 'ASPNETCORE_ENVIRONMENT=Production'
   svg2font.generator:
     volumes:
-      - '/${ATTACH_DISK}/app/svg2font/wwwroot/icon:/app/uploads/'
+      - '/${ATTACH_DISK}/app/svg2font/wwwroot/icon:/app/uploads/:rw'
   # svg2font.generator:
   #   volumes:
   #     - '/usr/app/svg2font/wwwroot:/usr/src/Svg2Font.Api/wwwroot/'
