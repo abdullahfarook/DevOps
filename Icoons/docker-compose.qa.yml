@@ -1,0 +1,13 @@
+version: '3.4'
+services:
+  icoons.api:
+    volumes:
+      - '/${ATTACH_DISK}/app/icoons/wwwroot:/usr/app/wwwroot/'
+    environment:
+      - 'ASPNETCORE_ENVIRONMENT=Production'
+  icoons.generator:
+    volumes:
+      - '/${ATTACH_DISK}/app/icoons/wwwroot/icon:/app/uploads/:rw'
+  # icoons.generator:
+  #   volumes:
+  #     - '/usr/app/icoons/wwwroot:/usr/src/icoons.Api/wwwroot/'

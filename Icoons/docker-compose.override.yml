@@ -1,0 +1,15 @@
+version: '3.4'
+services:
+  icoons.api:
+    volumes:
+      - 'c:/${ATTACH_DISK}/app/icoons/wwwroot:/usr/app/wwwroot/'
+    environment:
+      - 'ASPNETCORE_ENVIRONMENT=Sandbox'
+    build:
+      context: ../../icoons.Api/
+      dockerfile: ./Dockerfile.original
+  icoons.generator:
+    volumes:
+      - 'c:/${ATTACH_DISK}/app/icoons/wwwroot/icon:/app/uploads/:ro'
+    build:
+      context: ../../icoons.Generator/

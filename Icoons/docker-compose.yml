@@ -1,0 +1,37 @@
+version: '3.4'
+services:
+  icoons.api:
+    image: 'brickclaycontainerregistry.azurecr.io/icoons.api:latest'
+    container_name: icoons_api
+    ports:
+      - '5000:5000'
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - 'ConnectionString=Server=${DB_HOST},${DB_PORT};Database=${DB_NAME};User Id=${DB_USERNAME};Password=${DB_PASSWORD};MultipleActiveResultSets=true;'
+      - ASPNETCORE_ENVIRONMENT=Sandbox
+    restart: always
+    networks:
+      - proxynet
+    volumes:
+      - 'c:/${ATTACH_DISK}/app/icoons/wwwroot:/usr/app/wwwroot/'
+  icoons.generator:
+    image: 'brickclaycontainerregistry.azurecr.io/icoons.generator:latest'
+    container_name: icoons_generator
+    restart: always
+    ports:
+      - '3000:3000'
+    environment:
+      - 'API_PREFIX=${API_PREFIX}'
+      - 'DB_HOST=${DB_HOST}'
+      - 'DB_PORT=${DB_PORT}'
+      - 'DB_NAME=${DB_NAME}'
+      - 'DB_USERNAME=${DB_USERNAME}'
+      - 'DB_PASSWORD=${DB_PASSWORD}'
+    networks:
+      - proxynet
+    volumes:
+      - 'c:/${ATTACH_DISK}/app/icoons/wwwroot/icon:/app/uploads/:ro'
+networks:
+  proxynet:
+    external:
+      name: devops_default
