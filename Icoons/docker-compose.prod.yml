@@ -7,7 +7,7 @@ services:
       - 'ASPNETCORE_ENVIRONMENT=Production'
   icoons.generator:
     volumes:
-      - '/${ATTACH_DISK}/app/icoons/wwwroot/icon:/app/uploads/:ro'
+      - '/${ATTACH_DISK}/app/icoons/wwwroot/icon:/app/uploads/:rw'
   # icoons.generator:
   #   volumes:
   #     - '/usr/app/icoons/wwwroot:/usr/src/icoons.Api/wwwroot/'

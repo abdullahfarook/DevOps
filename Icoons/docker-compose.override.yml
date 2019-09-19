@@ -10,6 +10,6 @@ services:
       dockerfile: ./Dockerfile.original
   icoons.generator:
     volumes:
-      - 'c:/${ATTACH_DISK}/app/icoons/wwwroot/icon:/app/uploads/:ro'
+      - 'c:/${ATTACH_DISK}/app/icoons/wwwroot/icon:/app/uploads/:rw'
     build:
       context: ../../icoons.Generator/
